@@ -1,47 +1,38 @@
-var helicopterIMG, helicopterSprite, packageSprite,packageIMG;
-var packageBody,ground
+
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Render = Matter.Render;
-function preload()
-{
-	
-}
+var dustbinObj, paperObject,groundObject	
+var world;
+
 
 function setup() {
-	createCanvas(800, 700);
+	createCanvas(1600, 700);
+	rectMode(CENTER);
+
+
 	engine = Engine.create();
 	world = engine.world;
-
-	box=createSprite(400,670,190,10);
-	box.shapeColor=color("red");
-	box1=createSprite(300,630,10,90);
-	box1.shapeColor=color("red");
-	box2=createSprite(490,630,10,90);
-	box2.shapeColor=color("red");
-
-	box3=createSprite(200,670,190,10);
-	box3.shapeColor=color("red");
-	box4=createSprite(100,630,10,90);
-	box4.shapeColor=color("red");
-	box5=createSprite(490,630,10,90);
-	box5.shapeColor=color("red");
-
-
-	ball = new Ball(100,100,20,20)
-
-	ball = Bodies.circle(width/2 , 200 , 5 , {restitution:1.5, isStatic:false});
-	World.add(world, packageBody);
+	dustbinObj=new dustbin(1200,650);
+	paperObject=new paper(200,450,40);
+	groundObject=new ground(width/2,670,width,20);
+	//Create a Ground
 	
 
-	//Create a Ground
-	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
- 	World.add(world, ground);
-
+	var render = Render.create({
+	  element: document.body,
+	  engine: engine,
+	  options: {
+	    width: 1200,
+	    height: 700,
+	    wireframes: false
+	  }
+	});
 
 	Engine.run(engine);
+	//Render.run(render);
   
 }
 
@@ -49,15 +40,26 @@ function setup() {
 function draw() {
   rectMode(CENTER);
   background(0);
-  Ball.desplay();
-
-  drawSprites();
+ 
+  dustbinObj.display();
+  paperObject.display();
+  groundObject.display();
+  
+ 
+  
+  
  
 }
 
-	function keyPresed(){
+function keyPressed() {
+  	if (keyCode === UP_ARROW) {
 
-	Matter.Body.applyForce(ballObject.body,ballObject.body.position,{x:85,y:-85});
+    	Matter.Body.applyForce(paperObject.body,paperObject.body.position,{x:85,y:-85});
+    
+  	}
+}
 
-	}
+
+
+
 
